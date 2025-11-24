@@ -12,6 +12,7 @@ const HomePage = () => {
   const [activeSubmenu, setActiveSubmenu] = useState('');
   const [selectedBookingType, setSelectedBookingType] = useState(null);
   const [showAdminDashboard, setShowAdminDashboard] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
   const navigate = useNavigate();
 
   // Menu items data
@@ -23,16 +24,18 @@ const HomePage = () => {
       label: 'Book Slot',
       submenu: [
         { id: 'daily', label: 'Daily' },
-        { id: 'weekly', label: 'Weekly' },
+        // { id: 'weekly', label: 'Weekly' },
         { id: 'monthly', label: 'Monthly' },
-        { id: 'special', label: 'Special Events' }
+        // { id: 'special', label: 'Special Events' }
       ]
     },
     { id: 'gallery', label: 'Gallery', submenu: [] }, // ✅ changed
     { id: 'contact', label: 'Contact Us', submenu: [] },
     { id: 'about', label: 'About Us', submenu: ['Our Story', 'Facilities', 'Team'] },
-    { id: 'admin', label: 'Admin Only', submenu: ['Dashboard', 'Bookings', 'Users'] },
-    { id: 'logout', label: 'Logout', submenu: [] },
+    { id: 'terms', label: 'Terms & Conditions', submenu: [] },
+    { id: 'privacy', label: 'Privacy Policy', submenu: [] },
+    // { id: 'admin', label: 'Admin Only', submenu: ['Dashboard', 'Bookings', 'Users'] },
+    // { id: 'logout', label: 'Logout', submenu: [] },
   ];
 
   // Sports banner data
@@ -52,7 +55,7 @@ const HomePage = () => {
     {
       id: 3,
       title: 'Tennis Courts',
-      image: 'https://images.unsplash.com/photo-1554068864-787f01234413?auto=format&fit=crop&w=1470&q=80',
+      image: 'https://images.unsplash.com/photo-1508804185872-d7badad00f7d?auto=format&fit=crop&w=1470&q=80',
       sport: 'tennis'
     },
     {
@@ -132,6 +135,16 @@ const HomePage = () => {
     return () => clearInterval(timer);
   }, []);
 
+  // Read logged-in user from localStorage
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem('lf_user');
+      setCurrentUser(stored ? JSON.parse(stored) : null);
+    } catch (err) {
+      setCurrentUser(null);
+    }
+  }, []);
+
   const nextBanner = () => {
     setCurrentBanner((prev) => (prev + 1) % sportsBanners.length);
   };
@@ -174,9 +187,24 @@ const HomePage = () => {
       navigate('/contacting');
       setIsDrawerOpen(false);
     }
+    else if (menuId === 'terms') {
+      navigate('/terms');
+      setIsDrawerOpen(false);
+      return;
+    }
+    else if (menuId === 'privacy') {
+      navigate('/privacy');
+      setIsDrawerOpen(false);
+      return;
+    }
     else if (menuId === 'logout') {
-      // Redirect to Login page on logout
-      navigate('/login');
+      try {
+        localStorage.removeItem('lf_user');
+      } catch (err) {
+        // ignore
+      }
+      setCurrentUser(null);
+      navigate('/');
       setIsDrawerOpen(false);
       return;
     }
@@ -240,7 +268,17 @@ const HomePage = () => {
             <h1 className="text-xl font-bold text-white">LearnFort Sports Park</h1>
           </div>
           <div className="flex items-center space-x-4  ">
-            <button className="p-2 rounded-md bg-white/10 text-white transition-transform transform hover:scale-105">
+            <button
+              type="button"
+              onClick={() => {
+                if (currentUser) {
+                  navigate('/admin');
+                } else {
+                  navigate('/login');
+                }
+              }}
+              className="p-2 rounded-md bg-white/10 text-white transition-transform transform hover:scale-105"
+            >
               <FiUser className="w-6 h-6 " />
             </button>
           </div>
@@ -414,8 +452,8 @@ const HomePage = () => {
                       </div>
                     </div>
                     <div className="text-right">
-                      <span className="text-gray-400 text-sm line-through">${turf.price + 10}</span>
-                      <p className="text-lg font-bold text-blue-600">${turf.price}<span className="text-sm text-gray-500">/hr</span></p>
+                      <span className="text-gray-400 text-sm line-through">₹{turf.price + 10}</span>
+                      <p className="text-lg font-bold text-blue-600">₹{turf.price}<span className="text-sm text-gray-500">/hr</span></p>
                     </div>
                   </div>
                   <div className="flex items-center text-gray-500 text-sm mt-2">

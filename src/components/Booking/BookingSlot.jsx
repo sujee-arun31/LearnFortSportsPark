@@ -29,6 +29,14 @@ const timeSlots = [
   available: Math.random() > 0.2, // random 80% availability
 }));
 
+const getTodayStr = () => {
+  const d = new Date();
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`; // YYYY-MM-DD in local time
+};
+
 const BookingSlot = () => {
   const { sportType } = useParams();
   const navigate = useNavigate();
@@ -45,12 +53,52 @@ const BookingSlot = () => {
 
   const gradientClass = sportColors[sportType] || sportColors.default;
 
+  const todayStr = getTodayStr();
+
+  const isSameDayAsToday = (dateStr) => {
+    if (!dateStr) return false;
+    return dateStr === todayStr;
+  };
+
+  const parseSlotEndToDate = (dateStr, slotTime) => {
+    if (!dateStr) return null;
+    const parts = slotTime.split("-");
+    if (parts.length < 2) return null;
+    const endPart = parts[1].trim(); // e.g. "02:00 AM"
+
+    const [time, meridiem] = endPart.split(" ");
+    if (!time || !meridiem) return null;
+    const [rawHour, rawMinute] = time.split(":");
+    let hour = parseInt(rawHour, 10);
+    const minute = parseInt(rawMinute || "0", 10);
+
+    const isPM = meridiem.toUpperCase() === "PM";
+    if (isPM && hour !== 12) hour += 12;
+    if (!isPM && hour === 12) hour = 0;
+
+    const d = new Date(dateStr);
+    d.setHours(hour, minute, 0, 0);
+    return d;
+  };
+
+  const isPastSlot = (slotTime) => {
+    if (!selectedDate) return false;
+    // If selected date is not today, past vs future by date is handled by min on input
+    if (!isSameDayAsToday(selectedDate)) return false;
+
+    const slotEndDate = parseSlotEndToDate(selectedDate, slotTime);
+    if (!slotEndDate) return false;
+
+    const now = new Date();
+    return slotEndDate <= now;
+  };
+
   const handleBooking = () => {
     if (!selectedDate || !selectedSlot) {
       alert("Please select both date and time slot");
       return;
     }
-    
+
     // Calculate amount based on players and sport type
     const basePrice = {
       cricket: 1500,
@@ -60,32 +108,32 @@ const BookingSlot = () => {
       basketball: 800,
       'table-tennis': 300,
     }[sportType] || 500;
-    
+
     const amount = basePrice * players;
-    
+
     setBookingDetails({
       sport: sportName,
-      date: new Date(selectedDate).toLocaleDateString('en-US', { 
-        weekday: 'long', 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
+      date: new Date(selectedDate).toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
       }),
       timeSlot: selectedSlot,
       players,
       amount
     });
-    
+
     setShowConfirmation(true);
   };
-  
+
   const handleConfirmBooking = (formData) => {
     // Here you would typically send this data to your backend
     console.log('Booking confirmed:', { ...bookingDetails, ...formData });
-    
+
     // Show success message
     alert(`Booking confirmed! A confirmation has been sent to ${formData.email}`);
-    
+
     // Reset and close
     setShowConfirmation(false);
     setSelectedSlot(null);
@@ -96,21 +144,20 @@ const BookingSlot = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-white p-4 md:p-8">
       <div className="max-w-5xl mx-auto">
-       {/* Header */}
-<header className="bg-gradient-to-r from-[#1E3A8A] to-[#2563EB] text-white shadow-md sticky top-0 z-10">
-  <div className="max-w-5xl mx-auto px-16 py-4 flex items-center">
-    <button
-      onClick={() => navigate(-1)}
-      className="p-2 rounded-full bg-white/10 hover:bg-white/10 mr-4 transition"
-    >
-      <FiArrowLeft className="w-5 h-5" />
-    </button>
-
-    <h1 className="text-xl sm:text-2xl font-semibold tracking-wide">
-      Book {sportName} Slot
-    </h1>
-  </div>
-</header>
+        {/* Header */}
+        <header className="bg-gradient-to-r from-[#1E3A8A] to-[#2563EB] text-white shadow-md sticky top-0 z-10">
+          <div className="max-w-6xl mx-auto px-4 py-4 flex items-center">
+            <button
+              onClick={() => navigate(-1)}
+              className="p-2 rounded-full bg-white/10 hover:bg-white/10 mr-4 transition"
+            >
+              <FiArrowLeft className="w-5 h-5" />
+            </button>
+            <h1 className="text-xl sm:text-2xl font-semibold tracking-wide">
+              Book {sportName} Slot
+            </h1>
+          </div>
+        </header>
 
         {/* Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-10">
@@ -124,7 +171,12 @@ const BookingSlot = () => {
                 <input
                   type="date"
                   value={selectedDate}
-                  onChange={(e) => setSelectedDate(e.target.value)}
+                  min={todayStr}
+                  onChange={(e) => {
+                    setSelectedDate(e.target.value);
+                    // Clear selected slot if it becomes invalid for new date
+                    setSelectedSlot(null);
+                  }}
                   className="bg-transparent outline-none text-gray-700 font-medium cursor-pointer"
                 />
               </div>
@@ -136,26 +188,37 @@ const BookingSlot = () => {
                 <FiClock className="text-indigo-500" /> Available Time Slots
               </h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-3 gap-4">
-                {timeSlots.map((slot) => (
-                  <button
-                    key={slot.id}
-                    onClick={() => slot.available && setSelectedSlot(slot.time)}
-                    disabled={!slot.available}
-                    className={`relative px-4 py-3 rounded-lg border text-xs text-center  transition-all duration-200 ${selectedSlot === slot.time
-                      ? `border-transparent bg-gradient-to-r ${gradientClass} text-white shadow-md`
-                      : slot.available
-                        ? "border-gray-200 hover:border-indigo-300 hover:shadow-sm bg-gray-50 text-gray-700"
-                        : "border-gray-100 bg-gray-100 cursor-not-allowed opacity-60 text-gray-400"
-                      }`}
-                  >
-                    {selectedSlot === slot.time && (
-                      <div className="absolute -top-1 -right-1 bg-green-500 text-white rounded-full p-[3px]">
-                        <FiCheck className="text-[10px]" />
-                      </div>
-                    )}
-                    {slot.time}
-                  </button>
-                ))}
+                {timeSlots
+                  .filter((slot) => !isPastSlot(slot.time))
+                  .map((slot) => {
+                    const past = isPastSlot(slot.time);
+                    const disabled = !slot.available || past;
+
+                    return (
+                      <button
+                        key={slot.id}
+                        onClick={() => {
+                          if (!disabled) {
+                            setSelectedSlot(slot.time);
+                          }
+                        }}
+                        disabled={disabled}
+                        className={`relative px-4 py-3 rounded-lg border text-xs text-center  transition-all duration-200 ${selectedSlot === slot.time
+                          ? `border-transparent bg-gradient-to-r ${gradientClass} text-white shadow-md`
+                          : !disabled
+                            ? "border-gray-200 hover:border-indigo-300 hover:shadow-sm bg-gray-50 text-gray-700"
+                            : "border-gray-100 bg-gray-100 cursor-not-allowed opacity-60 text-gray-400"
+                          }`}
+                      >
+                        {selectedSlot === slot.time && (
+                          <div className="absolute -top-1 -right-1 bg-green-500 text-white rounded-full p-[3px]">
+                            <FiCheck className="text-[10px]" />
+                          </div>
+                        )}
+                        {slot.time}
+                      </button>
+                    );
+                  })}
               </div>
             </div>
           </div>
@@ -212,8 +275,8 @@ const BookingSlot = () => {
                   <div className="flex justify-between">
                     <span className="text-gray-600">Price:</span>
                     <span className="font-medium">
-                      ${players * 10}{" "}
-                      <span className="text-sm text-gray-500">($10/player)</span>
+                      ₹{players * 10}{" "}
+                      <span className="text-sm text-gray-500">(₹10/player)</span>
                     </span>
                   </div>
                   <div className="border-t border-dashed my-2"></div>
@@ -222,7 +285,7 @@ const BookingSlot = () => {
                     <span
                       className={`${gradientClass} bg-clip-text text-transparent`}
                     >
-                      ${players * 10}
+                      ₹{players * 10}
                     </span>
                   </div>
                 </div>
@@ -244,7 +307,7 @@ const BookingSlot = () => {
           </div>
         </div>
       </div>
-      
+
       {/* Booking Confirmation Modal */}
       <BookingConfirmation
         isOpen={showConfirmation}

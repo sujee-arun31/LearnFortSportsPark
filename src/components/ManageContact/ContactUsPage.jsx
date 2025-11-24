@@ -68,8 +68,19 @@ const ContactUsPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 via-indigo-50 to-white text-gray-800 font-['Inter',sans-serif] relative">
-      {/* Header */}
-          {/* Header */} <header className="bg-gradient-to-r from-[#1E3A8A] to-[#2563EB] text-white shadow-md sticky top-0 z-10"> <div className="max-w-5xl mx-auto px-4 py-4 flex items-center"> <button onClick={() => navigate(-1)} className="p-2 rounded-full bg-white/10 hover:bg-white/10 mr-4 transition "> <FiArrowLeft className="w-5 h-5" /> </button> <h1 className="text-xl sm:text-2xl font-semibold tracking-wide">Customer Issues</h1> </div> </header>
+      <header className="bg-gradient-to-r from-[#1E3A8A] to-[#2563EB] text-white shadow-md sticky top-0 z-10">
+        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center">
+          <button
+            onClick={() => navigate(-1)}
+            className="p-2 rounded-full bg-white/10 hover:bg-white/10 mr-4 transition"
+          >
+            <FiArrowLeft className="w-5 h-5" />
+          </button>
+          <h1 className="text-xl sm:text-2xl font-semibold tracking-wide">
+            Customer Issues
+          </h1>
+        </div>
+      </header>
 
 
       {/* Tabs */}
@@ -80,8 +91,8 @@ const ContactUsPage = () => {
               key={tab}
               onClick={() => setActiveTab(tab)}
               className={`px-5 py-2 rounded-full text-sm font-medium capitalize transition-all duration-300 ${activeTab === tab
-                  ? "bg-gradient-to-r from-blue-700 to-indigo-600 text-white shadow-md"
-                  : "text-gray-600 hover:text-blue-600"
+                ? "bg-gradient-to-r from-blue-700 to-indigo-600 text-white shadow-md"
+                : "text-gray-600 hover:text-blue-600"
                 }`}
             >
               {tab}
@@ -138,8 +149,8 @@ const ContactUsPage = () => {
                 {/* Status */}
                 <span
                   className={`px-3 py-1 text-[11px] font-semibold rounded-full ${issue.status === "Unread"
-                      ? "bg-yellow-100 text-yellow-700"
-                      : "bg-green-100 text-green-700"
+                    ? "bg-yellow-100 text-yellow-700"
+                    : "bg-green-100 text-green-700"
                     }`}
                 >
                   {issue.status}
@@ -204,7 +215,7 @@ const ContactUsPage = () => {
         </div>
       )}
 
-    
+
     </div>
   );
 };

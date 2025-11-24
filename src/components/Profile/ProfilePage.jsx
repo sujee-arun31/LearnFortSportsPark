@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
     FiArrowLeft,
     FiUser,
@@ -13,21 +13,42 @@ import { motion } from "framer-motion";
 
 const ProfilePage = () => {
     const navigate = useNavigate();
+    const [user, setUser] = useState(null);
 
-    const user = {
-        name: "John Doe",
-        fatherName: "Michael Doe",
-        email: "john.doe@example.com",
-        mobile: "9876543210",
-        nativePlace: "Mumbai",
-        aadhaar: "123456789012",
-        address: "123, Main Street, Mumbai, Maharashtra",
-    };
+    useEffect(() => {
+        try {
+            const stored = localStorage.getItem("lf_user");
+            const parsed = stored ? JSON.parse(stored) : null;
+            setUser(parsed);
+        } catch (err) {
+            setUser(null);
+        }
+    }, []);
+
+    const displayName = user?.name || "Guest";
+    const roleLabel = user?.role === "ADMIN" ? "Admin" : "User";
+    const fatherName = user?.father_name || "-";
+    const email = user?.email || "-";
+    const mobile = user?.mobile || "-";
+    const nativePlace = user?.native_place || "-";
+    const aadhaar = user?.aadhar_number || "-";
+    const address = user?.address || "-";
 
     return (
         <div className="min-h-screen flex flex-col bg-gradient-to-b from-blue-50 via-indigo-50 to-white text-gray-800 font-['Inter',sans-serif]">
-              {/* Header */} <header className="bg-gradient-to-r from-[#1E3A8A] to-[#2563EB] text-white shadow-md sticky top-0 z-10"> <div className="max-w-5xl mx-auto px-4 py-4 flex items-center"> <button onClick={() => navigate(-1)} className="p-2 rounded-full bg-white/10 hover:bg-white/10 mr-4 transition" > <FiArrowLeft className="w-5 h-5" /> </button> <h1 className="text-xl sm:text-2xl font-semibold tracking-wide">Manage Profile</h1> </div> </header>
-               
+  <header className="bg-gradient-to-r from-[#1E3A8A] to-[#2563EB] text-white shadow-md sticky top-0 z-10">
+                <div className="max-w-6xl mx-auto px-4 py-4 flex items-center">
+                    <button
+                        onClick={() => navigate(-1)}
+                        className="p-2 rounded-full bg-white/10 hover:bg-white/10 mr-4 transition"
+                    >
+                        <FiArrowLeft className="w-5 h-5" />
+                    </button>
+                    <h1 className="text-xl sm:text-2xl font-semibold tracking-wide">
+                        Manage Profile
+                    </h1>
+                </div>
+            </header>               
             {/* Main Section */}
             <main className="flex-1 flex flex-col items-center justify-center px-4 py-8">
                 <motion.div
@@ -41,9 +62,9 @@ const ProfilePage = () => {
                             <FiUser className="w-12 h-12 text-blue-700" />
                         </div>
                         <h2 className="mt-3 text-lg font-semibold text-blue-800">
-                            {user.name}
+                            {displayName}
                         </h2>
-                        <p className="text-xs text-gray-500">Admin - LearnFort Sports Park</p>
+                        <p className="text-xs text-gray-500">{roleLabel} - LearnFort Sports Park</p>
                     </div>
 
                     {/* Profile Details */}
@@ -51,32 +72,32 @@ const ProfilePage = () => {
                         {[
                             {
                                 label: "Name",
-                                value: user.name,
+                                value: displayName,
                                 icon: <FiUser className="text-blue-700" />,
                             },
                             {
                                 label: "Father's Name",
-                                value: user.fatherName,
+                                value: fatherName,
                                 icon: <FiUser className="text-blue-700" />,
                             },
                             {
                                 label: "Mobile Number",
-                                value: user.mobile,
+                                value: mobile,
                                 icon: <FiPhone className="text-blue-700" />,
                             },
                             {
                                 label: "Email",
-                                value: user.email,
+                                value: email,
                                 icon: <FiMail className="text-blue-700" />,
                             },
                             {
                                 label: "Native Place",
-                                value: user.nativePlace,
+                                value: nativePlace,
                                 icon: <FiMapPin className="text-blue-700" />,
                             },
                             {
                                 label: "Aadhaar Number",
-                                value: user.aadhaar,
+                                value: aadhaar,
                                 icon: <FiCreditCard className="text-blue-700" />,
                             },
                         ].map((field, index) => (
@@ -106,7 +127,7 @@ const ProfilePage = () => {
                                     Address
                                 </span>
                                 <span className="text-sm font-semibold text-gray-800 mt-1">
-                                    {user.address}
+                                    {address}
                                 </span>
                             </div>
                         </div>

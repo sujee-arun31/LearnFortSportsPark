@@ -185,7 +185,7 @@ const SportsList = ({ onBack }) => {
               />
             </div>
 
-            <div className="flex items-center space-x-2 overflow-x-auto">
+            {/* <div className="flex items-center space-x-2 overflow-x-auto">
               {["all", "popular", "indoor", "outdoor", "team", "individual"].map(
                 (cat) => (
                   <button
@@ -201,7 +201,7 @@ const SportsList = ({ onBack }) => {
                   </button>
                 )
               )}
-            </div>
+            </div> */}
           </div>
         </motion.div>
 

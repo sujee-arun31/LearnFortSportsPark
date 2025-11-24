@@ -3,6 +3,7 @@ import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import SplashScreen from './components/SplashScreen';
 import HomePage from './components/HomePage';
 import BookingSlot from './components/Booking/BookingSlot';
+import SportsList from './components/Booking/SportsList';
 import AdminDashboard from './components/Admin/AdminDashboard';
 import AboutUs from './components/AboutUs/AboutUs';
 import GamesListPage from './components/GamesList/GamesListPage';
@@ -22,6 +23,8 @@ import Login from './components/Auth/Login';
 import CreateAccount from './components/Auth/CreateAccount';
 import ForgotPassword from './components/Auth/ForgotPassword';
 import VenueDetails from './components/Booking/VenueDetails';
+import TermsAndConditions from './components/TermsAndConditions';
+import PrivacyPolicy from './components/PrivacyPolicy';
 
 import './App.css';
 
@@ -32,7 +35,7 @@ function App() {
     // Simulate loading time
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, 600);
 
     return () => clearTimeout(timer);
   }, []);
@@ -75,6 +78,9 @@ function App() {
         <Route path="/add-sport" element={<AddSport />} />
         <Route path="/contact" element={<ContactUsPage />} />
         <Route path="/contacting" element={<Contacting />} />
+        <Route path="/terms" element={<TermsAndConditions />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/explore-sports" element={<SportsList onBack={() => window.history.back()} />} />
       </Routes>
   );
 }

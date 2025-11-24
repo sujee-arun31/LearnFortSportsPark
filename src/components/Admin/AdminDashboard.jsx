@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   FiArrowLeft,
@@ -12,10 +12,23 @@ import {
   FiSettings,
 } from "react-icons/fi";
 import { useNavigate, Routes, Route } from "react-router-dom";
-
-
 const AdminDashboard = ({ onBack }) => {
   const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem("lf_user");
+      if (stored) {
+        setUser(JSON.parse(stored));
+      }
+    } catch (err) {
+      // ignore parse errors
+    }
+  }, []);
+
+  const isAdmin = user?.role === "ADMIN";
+  const displayName = user?.name || (isAdmin ? "Admin" : "User");
 
   // Framer Motion variants
   const container = {
@@ -31,7 +44,7 @@ const AdminDashboard = ({ onBack }) => {
     show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
   };
 
-  const menuItems = [
+  const baseMenuItems = [
     {
       id: "profile",
       label: "Manage Profile",
@@ -77,6 +90,12 @@ const AdminDashboard = ({ onBack }) => {
     },
   ];
 
+  const menuItems = isAdmin
+    ? baseMenuItems
+    : baseMenuItems.filter((item) =>
+        ["profile", "bookings", "settings"].includes(item.id)
+      );
+
   const handleBack = () => (onBack ? onBack() : navigate("/"));
   const [activeMenu, setActiveMenu] = useState(null);
 
@@ -101,8 +120,19 @@ const AdminDashboard = ({ onBack }) => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 via-indigo-50 to-white text-gray-800 font-['Inter',sans-serif] pb-12">
-       {/* Header */} <header className="bg-gradient-to-r from-[#1E3A8A] to-[#2563EB] text-white shadow-md sticky top-0 z-10"> <div className="max-w-5xl mx-auto px-4 py-4 flex items-center"> <button onClick={() => navigate(-1)} className="p-2 rounded-full bg-white/10 hover:bg-white/10 mr-4 transition" > <FiArrowLeft className="w-5 h-5" /> </button> <h1 className="text-xl sm:text-2xl font-semibold tracking-wide"> Admin Dashboard </h1> </div> </header>
-    
+  <header className="bg-gradient-to-r from-[#1E3A8A] to-[#2563EB] text-white shadow-md sticky top-0 z-10">
+                <div className="max-w-6xl mx-auto px-4 py-4 flex items-center">
+                    <button
+                        onClick={() => navigate(-1)}
+                        className="p-2 rounded-full bg-white/10 hover:bg-white/10 mr-4 transition"
+                    >
+                        <FiArrowLeft className="w-5 h-5" />
+                    </button>
+                    <h1 className="text-xl sm:text-2xl font-semibold tracking-wide">
+                        Admin Dashboard
+                    </h1>
+                </div>
+            </header>    
 
       {/* Main Content */}
       <motion.main
@@ -117,7 +147,7 @@ const AdminDashboard = ({ onBack }) => {
           className="mb-8 bg-white rounded-2xl shadow-md p-6 border border-blue-100"
         >
           <h2 className="text-lg sm:text-xl font-semibold text-blue-700 mb-2">
-            Welcome Back, Admin 👋
+            {`Welcome Back, ${displayName} 👋`}
           </h2>
           <p className="text-gray-600 text-sm sm:text-base">
             Manage your sports park efficiently — handle bookings, users, sports

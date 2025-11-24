@@ -11,8 +11,8 @@ import {
   FaTableTennis,
   FaBullseye,
   FaBaseballBall,
-  FaArrowLeft,
 } from "react-icons/fa";
+import { FiArrowLeft } from "react-icons/fi";
 
 const games = [
   { id: 1, name: "Skating", icon: <FaSkating className="w-8 h-8" /> },
@@ -35,19 +35,19 @@ const GamesListPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#EAF3FF] to-[#F7FBFF] text-gray-800">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 bg-[#1E40AF] shadow-md sticky top-0 z-10 border-b border-blue-200">
-        <div className="flex items-center space-x-3">
+      <header className="bg-gradient-to-r from-[#1E3A8A] to-[#2563EB] text-white shadow-md sticky top-0 z-10">
+        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center">
           <button
             onClick={() => navigate(-1)}
-            className="p-2 rounded-full text-white hover:bg-blue-700 transition-colors"
+            className="p-2 rounded-full bg-white/10 hover:bg-white/10 mr-4 transition"
           >
-            <FaArrowLeft className="w-5 h-5" />
+            <FiArrowLeft className="w-5 h-5" />
           </button>
-          <h1 className="text-xl font-bold text-white tracking-wide">
+          <h1 className="text-xl sm:text-2xl font-semibold tracking-wide">
             Games & Facilities
           </h1>
         </div>
-      </div>
+      </header>
 
       {/* Games Grid */}
       <div className="max-w-6xl mx-auto px-6 py-10">

@@ -70,7 +70,7 @@ const BookingsPage = () => {
                 time: "4:00 PM - 6:00 PM",
                 duration: "2 hours",
                 status: "Paid",
-                amount: "₹500",
+                amount: "$500",
                 customer: {
                     name: "John Doe",
                     email: "john.doe@gmail.com",
@@ -379,7 +379,7 @@ const BookingsPage = () => {
                             <p className="text-gray-600 mb-4">
                                 Your payment of{" "}
                                 <span className="font-semibold text-yellow-700">
-                                    ₹500
+                                    $500
                                 </span>{" "}
                                 for {pendingBooking.game} booking is pending.
                             </p>
@@ -461,7 +461,7 @@ const BookingsPage = () => {
                                     Payment Details
                                 </h4>
                                 <div className="space-y-0.5">
-                                    <p><b>Due Amount:</b> ₹500</p>
+                                    <p><b>Due Amount:</b> $500</p>
                                     <p><b>Status:</b> <span className="text-yellow-600 font-medium">Pending</span></p>
                                     <p><b>Date:</b> {pendingBooking.date}</p>
                                 </div>

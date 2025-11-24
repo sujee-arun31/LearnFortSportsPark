@@ -99,16 +99,16 @@ const Confirmation = () => {
             <div className="space-y-2">
               <p className="flex justify-between">
                 <span className="text-gray-600">Booking Amount:</span>
-                <span className="font-medium">₹500.00</span>
+                <span className="font-medium">$500.00</span>
               </p>
               <p className="flex justify-between">
                 <span className="text-gray-600">GST (18%):</span>
-                <span>₹90.00</span>
+                <span>$90.00</span>
               </p>
               <div className="border-t border-gray-200 my-2"></div>
               <p className="flex justify-between text-lg font-semibold">
                 <span>Total Amount:</span>
-                <span className="text-blue-600">₹590.00</span>
+                <span className="text-blue-600">$590.00</span>
               </p>
             </div>
           </div>
@@ -150,7 +150,7 @@ const Confirmation = () => {
                 'Processing...'
               ) : (
                 <>
-                  Proceed to Pay ₹590.00
+                  Proceed to Pay $590.00
                   <FiCheckCircle className="ml-2" />
                 </>
               )}

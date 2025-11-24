@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiX, FiCheck, FiArrowLeft, FiArrowRight, FiClock, FiUsers, FiCalendar } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 const BookingConfirmation = ({ isOpen, onClose, onConfirm, bookingDetails }) => {
+    const navigate = useNavigate();
     const [step, setStep] = useState(1);
     const [showPaymentSuccess, setShowPaymentSuccess] = useState(false);
+    const [currentUser, setCurrentUser] = useState(null);
     const [formData, setFormData] = useState({
         fullName: "",
         fathersName: "",
@@ -33,6 +36,31 @@ const BookingConfirmation = ({ isOpen, onClose, onConfirm, bookingDetails }) => 
         }
     }, [isOpen]);
 
+    // When modal opens, try to prefill from logged-in user
+    useEffect(() => {
+        if (isOpen) {
+            try {
+                const stored = localStorage.getItem("lf_user");
+                const parsed = stored ? JSON.parse(stored) : null;
+                setCurrentUser(parsed);
+
+                if (parsed) {
+                    setFormData((prev) => ({
+                        ...prev,
+                        fullName: parsed.name || "",
+                        fathersName: parsed.father_name || "",
+                        mobileNumber: parsed.mobile || "",
+                        email: parsed.email || "",
+                        aadharNumber: parsed.aadhar_number || "",
+                        address: parsed.address || "",
+                    }));
+                }
+            } catch (err) {
+                setCurrentUser(null);
+            }
+        }
+    }, [isOpen]);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({
@@ -43,7 +71,14 @@ const BookingConfirmation = ({ isOpen, onClose, onConfirm, bookingDetails }) => 
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
         if (step === 1) {
+            // If no logged-in user, redirect to login instead of proceeding
+            if (!currentUser) {
+                onClose();
+                navigate("/login");
+                return;
+            }
             setStep(2);
         } else {
             setShowPaymentSuccess(true);
@@ -180,7 +215,7 @@ const BookingConfirmation = ({ isOpen, onClose, onConfirm, bookingDetails }) => 
                 <h2 className="text-2xl font-bold">Personal Details</h2>
                 <button
                     onClick={onClose}
-                    className="absolute right-4 top-4 text-white hover:bg-white/20 p-1 rounded-full"
+                    className="absolute right-4 top-4 p-2 rounded-full bg-white/10 hover:bg-white/20 mr-4 transition"
                     type="button"
                 >
                     <FiX className="w-6 h-6" />
@@ -207,11 +242,11 @@ const BookingConfirmation = ({ isOpen, onClose, onConfirm, bookingDetails }) => 
 
     const renderStepTwo = () => (
         <>
-            <div className="bg-gradient-to-r from-blue-600 to-blue-700 p-6 text-white relative rounded-t-2xl">
+            <div className="bg-gradient-to-r from-blue-600 to-blue-700 p-6 text-white relative">
                 <h2 className="text-2xl font-bold">Booking Summary</h2>
                 <button
                     onClick={onClose}
-                    className="absolute right-4 top-4 text-white hover:bg-white/20 p-1.5 rounded-full transition-colors"
+                    className="absolute right-4 top-4 p-2 rounded-full bg-white/10 hover:bg-white/20 mr-4 transition"
                     type="button"
                 >
                     <FiX className="w-5 h-5" />
@@ -221,45 +256,45 @@ const BookingConfirmation = ({ isOpen, onClose, onConfirm, bookingDetails }) => 
             <div className="p-6 space-y-6 overflow-y-auto flex-1">
                 <div className="space-y-5">
                     <h3 className="text-lg font-semibold text-gray-800 border-b pb-2">Turf Details</h3>
-                 <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
-  {/* Header */}
-  <div className="bg-gradient-to-r from-blue-500 to-cyan-500 px-4 py-3 flex items-center gap-2">
-    <FiCalendar className="text-white w-5 h-5" />
-    <h2 className="text-white font-semibold text-lg">Booking Details</h2>
-  </div>
+                    <div className="w-full bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
+                        {/* Header */}
+                        <div className="bg-gradient-to-r from-blue-500 to-cyan-500 px-4 py-3 flex items-center gap-2">
+                            <FiCalendar className="text-white w-5 h-5" />
+                            <h2 className="text-white font-semibold text-lg">Booking Details</h2>
+                        </div>
 
-  {/* Content */}
-  <div className="p-4 space-y-3 text-sm">
-    <div className="flex justify-between border-b pb-1">
-      <p className="font-semibold text-gray-700">Sport</p>
-      <p className="text-gray-600">{bookingDetails?.sport || "-"}</p>
-    </div>
+                        {/* Content */}
+                        <div className="p-4 space-y-3 text-sm">
+                            <div className="flex justify-between border-b pb-1">
+                                <p className="font-semibold text-gray-700">Sport</p>
+                                <p className="text-gray-600">{bookingDetails?.sport || "-"}</p>
+                            </div>
 
-    <div className="flex justify-between border-b pb-1">
-      <p className="font-semibold text-gray-700">Date</p>
-      <div className="flex items-center gap-1 text-gray-600">
-        <FiCalendar className="text-blue-500" size={14} />
-        <span>{bookingDetails?.date || "-"}</span>
-      </div>
-    </div>
+                            <div className="flex justify-between border-b pb-1">
+                                <p className="font-semibold text-gray-700">Date</p>
+                                <div className="flex items-center gap-1 text-gray-600">
+                                    <FiCalendar className="text-blue-500" size={14} />
+                                    <span>{bookingDetails?.date || "-"}</span>
+                                </div>
+                            </div>
 
-    <div className="flex justify-between border-b pb-1">
-      <p className="font-semibold text-gray-700">Time Slot</p>
-      <div className="flex items-center gap-1 text-gray-600">
-        <FiClock className="text-blue-500" size={14} />
-        <span>{bookingDetails?.timeSlot || "-"}</span>
-      </div>
-    </div>
+                            <div className="flex justify-between border-b pb-1">
+                                <p className="font-semibold text-gray-700">Time Slot</p>
+                                <div className="flex items-center gap-1 text-gray-600">
+                                    <FiClock className="text-blue-500" size={14} />
+                                    <span>{bookingDetails?.timeSlot || "-"}</span>
+                                </div>
+                            </div>
 
-    <div className="flex justify-between">
-      <p className="font-semibold text-gray-700">Players</p>
-      <div className="flex items-center gap-1 text-gray-600">
-        <FiUsers className="text-blue-500" size={14} />
-        <span>{bookingDetails?.players || "-"} Players</span>
-      </div>
-    </div>
-  </div>
-</div>
+                            <div className="flex justify-between">
+                                <p className="font-semibold text-gray-700">Players</p>
+                                <div className="flex items-center gap-1 text-gray-600">
+                                    <FiUsers className="text-blue-500" size={14} />
+                                    <span>{bookingDetails?.players || "-"} Players</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
 
 
@@ -268,7 +303,7 @@ const BookingConfirmation = ({ isOpen, onClose, onConfirm, bookingDetails }) => 
                             Personal Information
                         </h3>
 
-                        <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
+                        <div className="w-full bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
                             {/* Header */}
                             <div className="bg-gradient-to-r from-blue-500 to-cyan-500 px-4 py-3 flex items-center gap-2">
                                 <svg
@@ -386,7 +421,7 @@ const BookingConfirmation = ({ isOpen, onClose, onConfirm, bookingDetails }) => 
         <AnimatePresence>
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center z-50 p-4 overflow-y-auto">
                 <motion.div
-                    className="bg-white rounded-2xl w-full max-w-md shadow-2xl my-8 max-h-[90vh] flex flex-col"
+                    className="bg-white rounded-2xl w-full max-w-3xl shadow-2xl my-8 max-h-[90vh] flex flex-col"
                     initial={{ scale: 0.9, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     exit={{ scale: 0.9, opacity: 0 }}

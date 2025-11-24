@@ -19,16 +19,19 @@ const AddSport = () => {
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
             {/* Header */}
-            <div className="bg-gradient-to-r from-blue-800 to-blue-600 shadow-md py-4 px-6 flex items-center text-white rounded-sm">
-                <button
-                    onClick={() => navigate(-1)}
-                    className="flex items-center focus:outline-none"
-                >
-                    <FiArrowLeft className="w-5 h-5 mr-2" />
-                    <span className="text-xl sm:text-2xl font-semibold tracking-wide">Add Sports</span>
-                </button>
-            </div>
-
+          <header className="bg-gradient-to-r from-[#1E3A8A] to-[#2563EB] text-white shadow-md sticky top-0 z-10">
+                <div className="max-w-6xl mx-auto px-4 py-4 flex items-center">
+                    <button
+                        onClick={() => navigate(-1)}
+                        className="p-2 rounded-full bg-white/10 hover:bg-white/10 mr-4 transition"
+                    >
+                        <FiArrowLeft className="w-5 h-5" />
+                    </button>
+                    <h1 className="text-xl sm:text-2xl font-semibold tracking-wide">
+                        Add Sports
+                    </h1>
+                </div>
+            </header>
             {/* Form Card */}
             <div className="max-w-7xl mx-auto bg-white shadow-xl rounded-xl  mb-12 overflow-hidden border border-gray-100">
                 {/* Form Header */}

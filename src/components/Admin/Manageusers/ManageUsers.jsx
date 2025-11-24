@@ -96,13 +96,12 @@ const ManageUsers = () => {
       </div>
       <div className="flex items-center space-x-3">
         <span
-          className={`text-xs font-medium px-3 py-1 rounded-full ${
-            user.status === "Active"
+          className={`text-xs font-medium px-3 py-1 rounded-full ${user.status === "Active"
               ? "bg-green-100 text-green-700"
               : user.status === "Pending"
-              ? "bg-blue-100 text-blue-700"
-              : "bg-yellow-100 text-yellow-700"
-          }`}
+                ? "bg-blue-100 text-blue-700"
+                : "bg-yellow-100 text-yellow-700"
+            }`}
         >
           {user.status}
         </span>
@@ -118,8 +117,19 @@ const ManageUsers = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 via-indigo-50 to-white flex flex-col">
-      {/* Header */}
-          {/* Header */} <header className="bg-gradient-to-r from-[#1E3A8A] to-[#2563EB] text-white shadow-md sticky top-0 z-10"> <div className="max-w-5xl mx-auto px-4 py-4 flex items-center"> <button onClick={() => navigate(-1)} className="p-2 rounded-full bg-white/10 hover:bg-white/10 mr-4 transition"> <FiArrowLeft className="w-5 h-5" /> </button> <h1 className="text-xl sm:text-2xl font-semibold tracking-wide"> Manage users</h1> </div> </header>
+      <header className="bg-gradient-to-r from-[#1E3A8A] to-[#2563EB] text-white shadow-md sticky top-0 z-10">
+        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center">
+          <button
+            onClick={() => navigate(-1)}
+            className="p-2 rounded-full bg-white/10 hover:bg-white/10 mr-4 transition"
+          >
+            <FiArrowLeft className="w-5 h-5" />
+          </button>
+          <h1 className="text-xl sm:text-2xl font-semibold tracking-wide">
+            Manage users
+          </h1>
+        </div>
+      </header>
 
 
       {/* Tabs */}
@@ -129,11 +139,10 @@ const ManageUsers = () => {
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${
-                activeTab === tab
+              className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${activeTab === tab
                   ? "bg-blue-600 text-white shadow-md"
                   : "text-gray-600 hover:text-blue-600"
-              }`}
+                }`}
             >
               {tab}
             </button>

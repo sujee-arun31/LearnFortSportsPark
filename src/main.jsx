@@ -55,16 +55,16 @@ function Footer() {
           </div>
           <div className="flex flex-col sm:flex-row gap-3">
             <a
-              href="/contact"
+              href="/explore-sports"
               className="inline-flex items-center justify-center rounded-full bg-white text-blue-700 px-6 py-2.5 text-sm font-medium shadow-sm hover:bg-blue-50 transition"
             >
-              Book a Session →
+              Book a Slot →
             </a>
             <a
-              href="tel:+919876543210"
-              className="inline-flex items-center justify-center rounded-full border border-white/70 px-6 py-2.5 text-sm font-medium hover:bg-white/10 transition"
+              href="/contacting"
+              className="inline-flex items-center justify-center rounded-full border border-white/80 text-white px-6 py-2.5 text-sm font-medium shadow-sm hover:bg-black transition"
             >
-              Call Us Now
+              Contact Us
             </a>
           </div>
         </div>
@@ -74,7 +74,7 @@ function Footer() {
       <div className="bg-slate-950 text-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-            {/* Brand & description */}
+           {/* Brand & description */}
             <div>
               <h3 className="text-lg font-semibold text-cyan-300 mb-2">LearnFort Sports Park</h3>
               <p className="text-sm text-slate-200/80 mb-4 max-w-sm">
@@ -82,60 +82,107 @@ function Footer() {
               </p>
 
               <div className="flex items-center gap-3">
-                <button className="h-9 w-9 rounded-full bg-slate-800 flex items-center justify-center text-slate-100 hover:bg-slate-700 text-sm">
+                     <a
+                  href="https://www.facebook.com/learnfortsports/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="h-9 w-9 rounded-full bg-slate-800 flex items-center justify-center text-slate-100 hover:bg-slate-700 text-sm"
+                >
                   f
-                </button>
-                <button className="h-9 w-9 rounded-full bg-slate-800 flex items-center justify-center text-slate-100 hover:bg-slate-700 text-sm">
+                </a>
+
+                    <a
+                  href="https://x.com/learnfortsports"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="h-9 w-9 rounded-full bg-slate-800 flex items-center justify-center text-slate-100 hover:bg-slate-700 text-sm"
+                >
                   X
-                </button>
-                <button className="h-9 w-9 rounded-full bg-slate-800 flex items-center justify-center text-slate-100 hover:bg-slate-700 text-sm">
+                </a>
+               <a
+                  href="https://www.instagram.com/learnfortsports/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="h-9 w-9 rounded-full bg-slate-800 flex items-center justify-center text-slate-100 hover:bg-slate-700 text-sm"
+                >
                   @
-                </button>
-                <button className="h-9 w-9 rounded-full bg-slate-800 flex items-center justify-center text-slate-100 hover:bg-slate-700 text-sm">
+                </a>
+                   <a
+                  href="https://www.youtube.com/@learnfortsports"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="h-9 w-9 rounded-full bg-slate-800 flex items-center justify-center text-slate-100 hover:bg-slate-700 text-sm"
+                >
                   ▶
-                </button>
+                </a>
+                 <a
+                  href="https://www.linkedin.com/company/learn-fort-sports/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="h-9 w-9 rounded-full bg-slate-800 flex items-center justify-center text-slate-100 hover:bg-slate-700 text-sm"
+                >
+                  in
+                </a>
               </div>
+            </div> <div>
+             
+
             </div>
 
-            {/* Quick links */}
-            <div>
-              <h4 className="text-sm font-semibold tracking-wider text-slate-100 mb-3 uppercase">Quick Links</h4>
-              <ul className="space-y-2 text-sm">
-                {menus.map((m) => (
-                  <li key={m.href}>
-                    <a
-                      href={m.href}
-                      className="text-slate-200 hover:text-cyan-300 hover:underline transition"
-                    >
-                      {m.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
 
             {/* Contact info */}
-            <div>
-              <h4 className="text-sm font-semibold tracking-wider text-slate-100 mb-3 uppercase">Contact Info</h4>
-              <ul className="space-y-2 text-sm text-slate-200">
-                <li className="flex items-start gap-3">
-                  <FiMapPin className="mt-0.5 text-cyan-300" />
-                  <span>Bangala Patti, Dindigul, TN 624202</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <FiPhone className="text-cyan-300" />
-                  <a href="tel:+919876543210" className="hover:text-cyan-300 hover:underline">
-                    +91 98765 43210
-                  </a>
-                </li>
-                <li className="flex items-center gap-3">
-                  <FiMail className="text-cyan-300" />
-                  <a href="mailto:info@learnfortsports.com" className="hover:text-cyan-300 hover:underline">
-                    info@learnfortsports.com
-                  </a>
-                </li>
-              </ul>
-            </div>
+           <div>
+  <h4 className="text-sm font-semibold tracking-wider text-slate-100 mb-3 uppercase">
+    Contact Info
+  </h4>
+
+  <ul className="space-y-2 text-sm text-slate-200">
+    
+    {/* Address */}
+    <li className="flex items-start gap-3">
+      <FiMapPin className="mt-0.5 text-cyan-300" />
+      <span>Bangala Patti, Dindigul, TN 624202</span>
+    </li>
+
+  
+
+    {/* Landline Number */}
+    <li className="flex items-center gap-3">
+      <FiPhone className="text-cyan-300" />
+      <a
+        href="tel:+914543245622"
+        className="hover:text-cyan-300 hover:underline"
+      >
+      Landline:  +91 4543 245 622
+      </a>
+    </li>
+
+    {/* WhatsApp Number */}
+    <li className="flex items-center gap-3">
+      <FiPhone className="text-cyan-300" />
+      <a
+        href="https://wa.me/919444123722"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="hover:text-cyan-300 hover:underline"
+      >
+        WhatsApp: +91 94441 23722
+      </a>
+    </li>
+
+    {/* Email */}
+    <li className="flex items-center gap-3">
+      <FiMail className="text-cyan-300" />
+      <a
+        href="mailto:info@learnfortsports.com"
+        className="hover:text-cyan-300 hover:underline"
+      >
+        info@learnfortsports.com
+      </a>
+    </li>
+  </ul>
+</div>
+
           </div>
         </div>
 

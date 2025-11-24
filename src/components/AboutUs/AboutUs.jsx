@@ -46,11 +46,11 @@ const AboutUs = () => {
       >
         <button
           onClick={handleBack}
-          className="p-2 mr-3 hover:bg-[#ffffff22] rounded-full transition-all duration-200 hover:scale-110"
+          className="p-2 rounded-full bg-white/10 hover:bg-white/20 mr-4 transition"
         >
           <FiArrowLeft className="h-5 w-5" />
         </button>
-        <h1 className="text-xl font-bold tracking-wide uppercase">
+        <h1 className="text-xl font-bold tracking-wide">
           About LearnFort
         </h1>
       </motion.header>
@@ -82,37 +82,60 @@ const AboutUs = () => {
           transition={{ duration: 0.7 }}
           className="bg-white rounded-2xl shadow-lg p-6 md:p-8 border border-blue-50 hover:shadow-xl transition-all duration-300"
         >
-          <div className="flex flex-col md:flex-row items-center">
-            <div className="md:w-1/2 mb-6 md:mb-0 md:pr-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0077B6] to-[#00B4D8]">
-                  Our Story
-                </span>
-              </h2>
-              <p className="text-gray-700 leading-relaxed mb-4">
-                At <span className="font-semibold text-[#0077B6]">LearnFort Sports Park</span>, we've built more than just a sports facility — we’ve created a community hub where athletes of all levels can train, compete, and grow.
-              </p>
-              <p className="text-gray-700 leading-relaxed mb-4">
-                Spread across a massive <span className="font-semibold">14,000 sqft</span>, our state-of-the-art complex features professional-grade turfs and courts designed to meet international standards.
-              </p>
-              <p className="text-gray-700 leading-relaxed">
-                Our mission is to provide a safe, inclusive, and energetic environment that inspires athletic excellence and fosters a lifelong love for sports and fitness.
-              </p>
-            </div>
-            <div className="md:w-1/2">
-              <div className="relative rounded-xl overflow-hidden shadow-lg">
-                <img
-                  src="https://images.unsplash.com/photo-1543351611-58f69d7c1781?auto=format&fit=crop&w=1374&q=80"
-                  alt="LearnFort Sports Park"
-                  className="w-full h-64 md:h-80 object-cover transition-transform duration-500 hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
-                  <div className="text-white">
-                    <h3 className="text-xl font-bold mb-1">14,000 sq.ft</h3>
-                    <p className="text-sm text-blue-200">Premium Sports Facility</p>
+          <div className="p-6 md:p-12 bg-gray-50">
+            {/* Our Story Section */}
+            <div className="max-w-5xl mx-auto flex flex-col gap-8">
+              {/* Image on top */}
+              <div className="w-full">
+                <div className="relative rounded-xl overflow-hidden shadow-lg">
+                  <img
+                    src="https://images.unsplash.com/photo-1543351611-58f69d7c1781?auto=format&fit=crop&w=1374&q=80"
+                    alt="LearnFort Sports Park"
+                    className="w-full h-64 md:h-80 object-cover transition-transform duration-500 hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                    <div className="text-white">
+                      <h3 className="text-xl font-bold mb-1">14,000 sq.ft</h3>
+                      <p className="text-sm text-blue-200">Premium Sports Facility</p>
+                    </div>
                   </div>
                 </div>
               </div>
+
+              {/* Text content neatly aligned */}
+              <div className="w-full space-y-4 md:space-y-5">
+
+                <h2 className="text-2xl font-bold text-gray-900">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0077B6] to-[#00B4D8]">
+                    Our Story
+                  </span>
+                </h2>
+
+                <div className="border-l-4 border-[#00B4D8] pl-4 space-y-4 text-gray-700 leading-relaxed">
+
+                  <p>
+                    LearnFort Sports Park stands as a premier institution in the realm of sports management, dedicated to transforming the global sports ecosystem.
+                  </p>
+
+                  <p>
+                    LearnFort Sports Park – a pioneering initiative dedicated to revolutionizing sports engagement across India. At the heart of our organization beats an unwavering commitment to ignite a nationwide passion for sports and transform the landscape of athletic participation.
+                  </p>
+
+                  <p>
+                    LearnFort Sports Park is a hub which gives access to world-class coaching, and exhilarating tournaments converge seamlessly at your fingertips — a singular gateway to empowerment and self-discovery. Here, the spirit of sports thrives, bolstered by a vibrant ecosystem of support, guidance, and opportunity.
+                  </p>
+
+                  <p>
+                    LearnFort Sports Park is a trailblazer in nurturing athletic talent and revolutionizing the sports industry. With a mission to empower athletes and communities, LearnFort Sports Park combines state-of-the-art facilities with cutting-edge training techniques to prepare individuals for success on and off the field.
+                  </p>
+
+                  <p>
+                    LearnFort Sports Park envisions a dynamic future where sports transcend boundaries and become a catalyst for personal and community transformation. We aspire to elevate the sports experience for athletes and fans alike by fostering an environment of inclusivity, innovation, and excellence.
+                  </p>
+
+                </div>
+              </div>
+
             </div>
           </div>
         </motion.div>
@@ -154,12 +177,12 @@ const AboutUs = () => {
                   {sport.includes("Basketball")
                     ? "🏀"
                     : sport.includes("Football")
-                    ? "⚽"
-                    : sport.includes("Cricket")
-                    ? "🏏"
-                    : sport.includes("Badminton")
-                    ? "🏸"
-                    : "🏅"}
+                      ? "⚽"
+                      : sport.includes("Cricket")
+                        ? "🏏"
+                        : sport.includes("Badminton")
+                          ? "🏸"
+                          : "🏅"}
                 </span>
               </div>
               <h4 className="text-sm font-medium text-center text-gray-800">

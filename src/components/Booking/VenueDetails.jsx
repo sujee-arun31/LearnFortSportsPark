@@ -125,7 +125,7 @@ const VenueDetails = () => {
                             {venue.location}
                         </div>
                         <div className="flex items-end gap-2 mt-4">
-                            <span className="text-3xl font-bold">₹{venue.price}</span>
+                            <span className="text-3xl font-bold">${venue.price}</span>
                             <span className="text-sm text-blue-100 mb-1">per slot</span>
                         </div>
                     </div>
@@ -169,7 +169,7 @@ const VenueDetails = () => {
                             </p>
 
                             <p className="mt-2 text-3xl font-bold text-slate-900">
-                                ₹{venue.price}
+                                ${venue.price}
                                 <span className="ml-1 text-sm text-slate-500 font-normal">per slot</span>
                             </p>
 

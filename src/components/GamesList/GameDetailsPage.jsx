@@ -1,18 +1,18 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
-    FaArrowLeft,
     FaLightbulb,
     FaRestroom,
     FaWifi,
     FaUtensils,
     FaDumbbell,
 } from "react-icons/fa";
+import { FiArrowLeft } from "react-icons/fi";
 
 const gameDetails = {
     1: {
         name: "Skating",
-        image: "https://images.pexels.com/photos/1549044/pexels-photo-1549044.jpeg?auto=compress&cs=tinysrgb&w=800",
+        image: "https://images.pexels.com/photos/3774927/pexels-photo-3774927.jpeg?auto=compress&cs=tinysrgb&w=800",
         about:
             "Skating builds balance, endurance, and agility while keeping you active. Our smooth, wide rink offers a safe space for both beginners and experts to enjoy the thrill of motion on wheels.",
     },
@@ -30,7 +30,7 @@ const gameDetails = {
     },
     4: {
         name: "Kabaddi",
-        image: "https://images.pexels.com/photos/16193220/pexels-photo-16193220.jpeg?auto=compress&cs=tinysrgb&w=800",
+        image: "https://images.pexels.com/photos/7988696/pexels-photo-7988696.jpeg?auto=compress&cs=tinysrgb&w=800",
         about:
             "Kabaddi is a traditional Indian contact sport that enhances strength, focus, and quick reflexes. Enjoy competitive matches on our professional outdoor court.",
     },
@@ -42,7 +42,7 @@ const gameDetails = {
     },
     6: {
         name: "Karate",
-        image: "https://images.pexels.com/photos/625330/pexels-photo-625330.jpeg?auto=compress&cs=tinysrgb&w=800",
+        image: "https://images.pexels.com/photos/1701203/pexels-photo-1701203.jpeg?auto=compress&cs=tinysrgb&w=800",
         about:
             "Karate teaches discipline, confidence, and strength through structured training. Our dojo-style setup provides a professional environment for learning self-defense and fitness.",
     },
@@ -113,17 +113,17 @@ const GameDetailsPage = () => {
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
             {/* Header */}
-            <div className="flex items-center justify-between p-4 bg-[#1E3A8A] text-white shadow-md sticky top-0 z-10">
-                <div className="flex items-center space-x-3">
+            <header className="bg-gradient-to-r from-[#1E3A8A] to-[#2563EB] text-white shadow-md sticky top-0 z-10">
+                <div className="max-w-6xl mx-auto px-4 py-4 flex items-center">
                     <button
                         onClick={() => navigate(-1)}
-                        className="p-2 rounded-full text-white hover:bg-blue-700 transition-colors"
+                        className="p-2 rounded-full bg-white/10 hover:bg-white/10 mr-4 transition"
                     >
-                        <FaArrowLeft className="w-5 h-5" />
+                        <FiArrowLeft className="w-5 h-5" />
                     </button>
-                    <h1 className="text-xl font-bold">{game.name}</h1>
+                    <h1 className="text-xl sm:text-2xl font-semibold tracking-wide">{game.name}</h1>
                 </div>
-            </div>
+            </header>
 
             {/* Image */}
             <div className="relative w-full h-72 sm:h-96 overflow-hidden">

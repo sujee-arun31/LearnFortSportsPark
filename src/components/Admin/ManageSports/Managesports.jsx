@@ -101,8 +101,19 @@ const ManageSports = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 via-emerald-50 to-white flex flex-col">
-      {/* Header */}
-         {/* Header */} <header className="bg-gradient-to-r from-[#1E3A8A] to-[#2563EB] text-white shadow-md sticky top-0 z-10"> <div className="max-w-5xl mx-auto px-4 py-4 flex items-center"> <button onClick={() => navigate(-1)} className="p-2 rounded-full bg-white/10 hover:bg-white/10 mr-4 transition" > <FiArrowLeft className="w-5 h-5" /> </button> <h1 className="text-xl sm:text-2xl font-semibold tracking-wide"> Manage Sports </h1> </div> </header>
+      <header className="bg-gradient-to-r from-[#1E3A8A] to-[#2563EB] text-white shadow-md sticky top-0 z-10">
+        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center">
+          <button
+            onClick={() => navigate(-1)}
+            className="p-2 rounded-full bg-white/10 hover:bg-white/10 mr-4 transition"
+          >
+            <FiArrowLeft className="w-5 h-5" />
+          </button>
+          <h1 className="text-xl sm:text-2xl font-semibold tracking-wide">
+            Manage Sports
+          </h1>
+        </div>
+      </header>
 
       {/* Table Section */}
       <div className="bg-white rounded-lg shadow-md p-6 mt-6 mx-6">
@@ -133,10 +144,10 @@ const ManageSports = () => {
                   Ground Name
                 </th>
                 <th className="py-3 px-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                  Actual Price (₹)
+                  Actual Price ($)
                 </th>
                 <th className="py-3 px-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                  Final Price (₹)
+                  Final Price ($)
                 </th>
                 <th className="py-3 px-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   Status
@@ -173,18 +184,17 @@ const ManageSports = () => {
                     {sport.ground}
                   </td>
                   <td className="py-4 px-4 text-sm text-gray-700">
-                    ₹{sport.actualPrice}
+                    ${sport.actualPrice}
                   </td>
                   <td className="py-4 px-4 text-sm font-semibold text-green-600">
-                    ₹{sport.finalPrice}
+                    ${sport.finalPrice}
                   </td>
                   <td className="py-4 px-4">
                     <span
-                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                        sport.status
+                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${sport.status
                           ? "bg-green-100 text-green-800"
                           : "bg-red-100 text-red-800"
-                      }`}
+                        }`}
                     >
                       {sport.status ? "Active" : "Inactive"}
                     </span>
